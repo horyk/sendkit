@@ -14,6 +14,9 @@
     "format:check": "oxfmt . --check",
     "lint": "oxlint . --deny-warnings",
     "lint:fix": "oxlint . --fix",
+    "build:core": "bun run --filter @horykoji/sendkit-core build",
+    "build:cli": "bun run --filter @horykoji/sendkit build",
+    "build:local-mcp": "bun run --filter @horykoji/sendkit-mcp build",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
@@ -21,6 +24,6 @@
     "oxfmt": "^0.74.0",
     "oxlint": "^1.89.0",
     "tsdown": "^0.23.2",
-    "typescript": "^7.0.2"
+    "typescript": "^6.0.3"
   }
 }
