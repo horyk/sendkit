@@ -16,17 +16,13 @@ export async function sendTelegramMessage(
     text: parsedInput.message,
   });
 
-  const response = await fetch(
-    `https://api.telegram.org/bot${parsedInput.botToken}/sendMessage`,
-    {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: await Response.json(requestBody).text(),
-    }
-  );
-
+  const response = await fetch(`https://api.telegram.org/bot${parsedInput.botToken}/sendMessage`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: await Response.json(requestBody).text(),
+  });
 
   const data = telegramSendMessageResponseSchema.parse(await response.json());
 
@@ -39,4 +35,4 @@ export async function sendTelegramMessage(
     chatId: parsedInput.chatId,
     messageId: data.result.message_id,
   });
-};
+}

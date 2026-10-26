@@ -1,15 +1,10 @@
 import { Hono, type Context } from "hono";
-import {
-  McpServer
-} from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { createClerkClient } from "@clerk/backend";
 import { generateClerkProtectedResourceMetadata } from "@clerk/mcp-tools/server";
-import {
-  WebStandardStreamableHTTPServerTransport
-} from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
+import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 
 import { sendTelegramMessage, telegramMessageInputSchema } from "sendkit-core";
-import { tr } from "zod/v4/locales/index.js";
 
 const clerkPublishableKey = process.env.CLERK_PUBLISHABLE_KEY;
 const clerkSecretKey = process.env.CLERK_SECRET_KEY;
@@ -31,7 +26,7 @@ function createServer(botToken: string) {
   const server = new McpServer({
     name: "sendkit-remote",
     version: "0.0.0",
-  })
+  });
 
   server.registerTool(
     "telegram",
@@ -43,8 +38,8 @@ function createServer(botToken: string) {
     async (input) => {
       const result = await sendTelegramMessage({
         ...input,
-        botToken
-      })
+        botToken,
+      });
 
       return {
         content: [
@@ -54,12 +49,12 @@ function createServer(botToken: string) {
           },
         ],
         structuredContent: result,
-      }
-    }
-  )
+      };
+    },
+  );
 
   return server;
-};
+}
 
 const app = new Hono();
 
@@ -80,9 +75,9 @@ app.get("/.well-known/oauth-protected-resource/:botToken/mcp", (c) => {
     generateClerkProtectedResourceMetadata({
       publishableKey: clerkPublishableKey,
       resourceUrl: new URL(`/${c.req.param("botToken")}/mcp`, c.req.url).toString(),
-    })
-  )
-})
+    }),
+  );
+});
 
 app.post("/:botToken/mcp", async (c) => {
   const botToken = c.req.param("botToken");

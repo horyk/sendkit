@@ -1,14 +1,9 @@
 import { Command } from "commander";
 import { z } from "zod";
 import { homedir } from "node:os";
-import { dirname, join } from "node:path"
+import { dirname, join } from "node:path";
 import { sendTelegramMessage } from "sendkit-core";
-import {
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
 const program = new Command();
 
@@ -20,7 +15,9 @@ const cliConfigSchema = z.object({
 
 function writeTelegramBotToken(token: string) {
   mkdirSync(dirname(configPath), { recursive: true });
-  writeFileSync(configPath, `${JSON.stringify({ telegramBotToken: token }, null, 2)}\n`, { mode: 0o600 });
+  writeFileSync(configPath, `${JSON.stringify({ telegramBotToken: token }, null, 2)}\n`, {
+    mode: 0o600,
+  });
 }
 
 function getTelegramBotToken() {
@@ -36,11 +33,10 @@ function getTelegramBotToken() {
   return token;
 }
 
-program
-  .name("sendkit")
-  .description("Sendkit CLI backed by sendkit-core")
+program.name("sendkit").description("Sendkit CLI backed by sendkit-core");
 
-program.command("init")
+program
+  .command("init")
   .description("Configure SendKit CLI local settings")
   .requiredOption("--telegram-bot-token <botToken>", "Telegram bot token")
   .action(async (options: { telegramBotToken: string }) => {

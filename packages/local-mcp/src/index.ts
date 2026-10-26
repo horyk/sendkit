@@ -1,8 +1,7 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 
 import { sendTelegramMessage, telegramMessageInputSchema } from "sendkit-core";
-import { input } from "zod";
 
 const server = new McpServer({
   name: "sendkit-local",
@@ -29,8 +28,8 @@ server.registerTool(
   async (input) => {
     const result = await sendTelegramMessage({
       ...input,
-      botToken: getTelegramBotToken()
-    })
+      botToken: getTelegramBotToken(),
+    });
 
     return {
       content: [
@@ -40,9 +39,9 @@ server.registerTool(
         },
       ],
       structuredContent: result,
-    }
-  }
-)
+    };
+  },
+);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
