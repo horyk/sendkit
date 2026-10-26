@@ -17,6 +17,9 @@
     "build:core": "bun run --filter @horykoji/sendkit-core build",
     "build:cli": "bun run --filter @horykoji/sendkit build",
     "build:local-mcp": "bun run --filter @horykoji/sendkit-mcp build",
+    "release:pack:core": "bun run --filter @horykoji/sendkit-core pack:dry",
+    "release:pack:cli": "bun run --filter @horykoji/sendkit pack:dry",
+    "release:pack:local-mcp": "bun run --filter @horykoji/sendkit-mcp pack:dry",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
